@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use EsperoSoft\Faker\Faker;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -11,51 +14,101 @@ class PostController extends Controller
     {
         $title = "Bienvenue chez Dawan";
         $description = "<h3>Bienvenue dans la description du Framework Laravel</h3>"; // XSS
-
+        /*
         $posts = [
             [
-                "id" => 1,
-                "title" => 'new post 1',
-                "description" => 'new post description 1',
+                "title" => 'new post 5',
+                "content" => 'new post 5',
+                "description" => 'new post description 5',
                 "imageUrl" => 'https://picsum.photos/300'
             ],
               [
-                "id" => 2,
-                "title" => 'new post 2',
-                "description" => 'new post description 2',
+                 "title" => 'new post 6',
+                "content" => 'new post 6',
+                "description" => 'new post description 6',
                 "imageUrl" => 'https://picsum.photos/300'
               ],
                 [
-                "id" => 3,
-                "title" => 'new post 3',
-                "description" => 'new post description 3',
+                 "title" => 'new post 7',
+                "content" => 'new post 7',
+                "description" => 'new post description 7',
                 "imageUrl" => 'https://picsum.photos/300'
                 ],
                   [
-                "id" => 4,
-                "title" => 'new post 4',
-                "description" => 'new post description 4',
+                "title" => 'new post 8',
+                "content" => 'new post 8',
+                "description" => 'new post description 8',
                 "imageUrl" => 'https://picsum.photos/300'
             ]
 
         ];
-
+        */
         //dd($posts);
+        // $post = new Post();
+        // $post->title = 'new article 2';
+        // $post->description = 'new description 2';
+        // $post->content = 'new content 2';
+        // $post->imageUrl = 'https://picsum.photos/300';
+        // //dd($post);
+        // $post->save();
 
-        return view('blog', ['title' => $title, 'description' => $description, 'posts' => $posts]);
+        // On charge les données du tableau en BDD
+        // foreach($posts as $post) {
+        //     Post::create($post);
+        // }
+
+        // Affichage des données depuis la tables posts 
+        //$posts = Post::all(); return view('blog', ['title' => $title, 'description' => $description, 'posts' => $posts]);
+
+        // Manipulation des articles avec Eloquent
+        //$post = Post::find(1); return $post;
+        //$posts = Post::where('id', '>', 2)->get(); return view('blog', ['title' => $title, 'description' => $description, 'posts' => $posts]);
+        //$posts = Post::where(['title' => 'new post 7'])->get(); return view('blog', ['title' => $title, 'description' => $description, 'posts' => $posts]);
+        //$posts = Post::where('title', 'like', '%post%')->get(); return view('blog', ['title' => $title, 'description' => $description, 'posts' => $posts]);
+       
+        // Pour paginer
+        //$posts = Post::paginate(2); return $posts;
+        // Edit
+        //$post = Post::find(1); $post->title = 'Bienvenue sur la formation Laravel + vue.js'; $post->save(); return $post;
+        // Suppression
+        // $post = Post::find(3); 
+        // if($post) {
+        //     $post->delete();
+        // }else {
+        //     echo "Cet article n'existe pas en BDD";
+        // }
+        /*
+        $faker = new Faker();
+        for($i = 0; $i < 200; $i++) {
+        $title = $faker->title(30);
+            Post::create([
+                "title" => $title,
+                "slug" => Str::slug($title),
+                "description" => $faker->title(60),
+                "content" => $faker->text(),
+                "imageUrl" => $faker->image()
+            ]);
+        }
+        $posts = Post::all();
+       */
+
+        $posts = Post::paginate(24); // 48 articles => p1: 24; p2:24
+        return view('posts.home', ['title' => $title, 'description' => $description, 'posts' => $posts]);
+
     }
 
+    public function show(string $slug, int $id)
+    {
+        $post = Post::find($id);
+        if($post->slug !== $slug) {
+            return to_route('post.show', ['slug' => $post->slug, 'id' => $post->id]);
+        }
+
+        return view('posts.show', ['post' => $post]);
+    }
     public function hello(): ?string
     {
         return 'Hello World 30';
-    }
-
-    public function show(string $slug, int $id): array
-    {
-        return [
-            'slug' => $slug,
-            'id' => $id
-        ];
     }
 
     public function data(Request $request)
@@ -77,6 +130,7 @@ class PostController extends Controller
         //return to_route('post.show', ['id' => 96, 'slug' => 'new-article-laravel33']);
         //return redirect()->route('welcome');
         return redirect()->route('post.data');
+
     }
 
 

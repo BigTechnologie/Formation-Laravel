@@ -15,30 +15,6 @@
                         Home
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('post.hello') ? 'active fw-bold' : '' }}" href="{{ route('post.hello') }}">
-                        Hello
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('post.show') ? 'active fw-bold' : '' }}" href="{{ route('post.show', ['slug' => 'exemple', 'id' => 1]) }}">
-                        Show (exemple)
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('post.data') ? 'active fw-bold' : '' }}" href="{{ route('post.data') }}">
-                        Data
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('post.new') ? 'active fw-bold' : '' }}" href="{{ route('post.new') }}">
-                        New
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
