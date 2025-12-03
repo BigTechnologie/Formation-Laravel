@@ -4,8 +4,66 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e728078d57daf0669dbb2bc68bec474f",
+    "content-hash": "1aadc69c5f540365448b7c771eb27062",
     "packages": [
+        {
+            "name": "bigtechnologie/laravel-entity-tools",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BigTechnologie/laravel-entity-tools.git",
+                "reference": "63348fa69de24e7390e7c1f597c643a3f175ddcc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BigTechnologie/laravel-entity-tools/zipball/63348fa69de24e7390e7c1f597c643a3f175ddcc",
+                "reference": "63348fa69de24e7390e7c1f597c643a3f175ddcc",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "php": "^8.1"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kandia\\EntityToolsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kandia\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kandia Diallo",
+                    "email": "dev.technologie2018@gmail.com"
+                }
+            ],
+            "description": "Package Laravel pour générer automatiquement des entités et des CRUD via Artisan. Utiliser la commande suivante dans votre terminal : composer require bigtechnologie/laravel-entity-tools:dev-main ",
+            "homepage": "https://github.com/BigTechnologie/laravel-entity-tools",
+            "keywords": [
+                "artisan",
+                "codegen",
+                "crud",
+                "entity",
+                "generator",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/BigTechnologie/laravel-entity-tools/issues",
+                "source": "https://github.com/BigTechnologie/laravel-entity-tools/tree/main"
+            },
+            "time": "2025-10-23T08:07:16+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.12.3",
@@ -8250,6 +8308,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "bigtechnologie/laravel-entity-tools": 20,
         "espero-soft/faker": 20
     },
     "prefer-stable": true,

@@ -58,18 +58,16 @@ Route::prefix('post')->name('post.')->group(function () {
 
 */
 
-Route::get('/', 'App\Http\Controllers\PostController@index')->name('welcome');
+Route::get('/', 'App\Http\Controllers\BlogController@index')->name('welcome');
 
-Route::prefix('post')->namespace('App\Http\Controllers')->name('post.')->group(function() {
+Route::prefix(prefix: 'blog')->namespace('App\Http\Controllers')->name('blog.')->group(function() {
 
-    Route::get('/hello', 'PostController@hello')->name('hello');
-
-   Route::get('/show/{slug}-{id}', 'PostController@show')
+   Route::get('/show/{slug}-{id}', 'BlogController@show')
         ->where(name: ['id' => '[0-9]+', 'slug' => '[a-z0-9-]+'])
         ->name('show');
 
-    Route::get('/data', 'PostController@data')->name('data');
-    Route::get('/new', 'PostController@new')->name('new');
+    Route::get('/categories', 'BlogController@categories')->name('categories');
+     Route::get('/categories/show/{id}', 'BlogController@showCategory')->name('show.category');
 });
 
 // La route de secours (404)

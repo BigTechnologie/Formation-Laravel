@@ -15,6 +15,11 @@
                         Home
                     </a>
                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('blog.categories') ? 'active fw-bold' : '' }}" href="{{ route('blog.categories') }}">
+                        Catégories
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

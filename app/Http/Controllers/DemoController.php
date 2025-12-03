@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Post;
 
-class PostController extends Controller
+class DemoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::orderBy("created_at", "desc");
-        return view("posts.index", ["posts" => $posts]);
+        //
     }
 
     /**
@@ -21,7 +19,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("posts.create");
+        //
     }
 
     /**
