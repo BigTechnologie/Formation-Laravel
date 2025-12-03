@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -68,6 +69,13 @@ Route::prefix(prefix: 'blog')->namespace('App\Http\Controllers')->name('blog.')-
 
     Route::get('/categories', 'BlogController@categories')->name('categories');
      Route::get('/categories/show/{id}', 'BlogController@showCategory')->name('show.category');
+});
+
+// Mise en place des routes pour l'administration du site
+Route::prefix('admin')->name('admin.')->group(function() {
+    Route::get('/posts', [PostController::class, 'index'])->name('post.index');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
+    Route::post('/posts/store', [PostController::class, 'store'])->name('post.store');
 });
 
 // La route de secours (404)

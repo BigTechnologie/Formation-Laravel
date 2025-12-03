@@ -21,6 +21,9 @@
                     </a>
                 </li>
             </ul>
+            <a href="{{ route('admin.post.index') }}" class="btn btn-success">
+                Admin
+            </a>
         </div>
     </div>
 </nav>

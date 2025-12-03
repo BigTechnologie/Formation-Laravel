@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostFormRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Post;
 
@@ -12,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy("created_at", "desc");
+        $posts = Post::orderBy("created_at", "desc")->paginate(8);
         return view("posts.index", ["posts" => $posts]);
     }
 
@@ -21,15 +23,20 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("posts.create");
+        $categories = Category::all();
+        return view("posts.create", ["categories" => $categories]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostFormRequest $request)
     {
-        //
+        $data = $request->validated();
+        // INSERT INTO ...
+        Post::create($data);
+
+        return redirect()->route('admin.post.index')->with("success", "Post has been saved !");
     }
 
     /**
