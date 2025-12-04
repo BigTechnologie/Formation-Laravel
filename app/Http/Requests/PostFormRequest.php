@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostFormRequest extends FormRequest
 {
@@ -22,11 +23,23 @@ class PostFormRequest extends FormRequest
      */
     public function rules(): array
     {
+        $imageRules = request()->isMethod("POST") ?
+            "required|image|mimes:jpeg,jpg,png,webp,gif|max:2048":
+            "nullable|image|mimes:jpeg,jpg,png,webp,gif|max:2048";
+
+        $titleRules = [
+            'required',
+            'min:4',
+            'max:60',
+            Rule::unique('posts', 'title')->ignore('id'),
+
+        ];
+
         return [
-            "title" => "required|unique:posts|min:4|max:60",
+            "title" => $titleRules,
             "slug" => '',
-            "imageUrl" => '',
-            "category_id" => '',
+            "imageUrl" => $imageRules,
+            "category_id" => 'required|exists:categories,id',
             "description" => "required|min:15|max:255",
             "content" => "required|max:3000",
         ];
@@ -36,8 +49,6 @@ class PostFormRequest extends FormRequest
     {
         $this->merge([
             "slug" => Str::slug($this->input("title")), // Str::slug("Hello World) -> hello-world
-            "imageUrl" => 'https://picsum.photos/300',
-            "category_id" => 2
         ]);
     }
 

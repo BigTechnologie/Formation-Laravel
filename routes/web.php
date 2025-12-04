@@ -16,48 +16,6 @@ use Illuminate\Http\Request;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-/*
-Route::get('/', function () {
-    return view('welcome'); // welcome.blade.php 
-})->name('welcome');
-
-
-Route::prefix('post')->name('post.')->group(function () {
-
-    Route::get('/hello', function () {
-        return 'Hello Dawan';
-    })->name('hello');
-
-    Route::get('/show/{slug}-{id}', function(string $slug, int $id) {
-        return [
-            'slug' => $slug,
-            'id' => $id
-        ];
-    })->where(name: ['id' => '[0-9]+', 'slug' => '[a-z0-9-]+'])->name('show'); 
-
-    Route::get('/data', function (Request $request) {
-    return [
-        'name' => $request->input('names', 'Zineb'),
-        'value' => $request->input('value', '25'),
-        'all' => $request->all()
-    ];
-    })->name('data');
-
-    // Les redirections 
-    Route::get('/new', function() {
-        // return [
-        //     //'welcome' => route('post.data'), // post.data
-        //     'hello' => route('post.hello')
-        // ];
-
-        //return to_route('post.show', ['id' => 96, 'slug' => 'new-article-laravel33']);
-        //return redirect()->route('welcome');
-        return redirect()->route('post.data');
-
-    });
-});
-
-*/
 
 Route::get('/', 'App\Http\Controllers\BlogController@index')->name('welcome');
 
@@ -76,15 +34,42 @@ Route::prefix('admin')->name('admin.')->group(function() {
     Route::get('/posts', [PostController::class, 'index'])->name('post.index');
     Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/posts/store', [PostController::class, 'store'])->name('post.store');
+    Route::get('/posts/view/{id}', [PostController::class, 'view'])->name('post.view');
+    Route::get('/posts/edit/{id}', [PostController::class, 'edit'])->name('post.edit');
+    Route::put('/posts/update/{id}', [PostController::class, 'update'])->name('post.update');
+    Route::delete('/posts/delete/{id}', [PostController::class, 'delete'])->name('post.delete');
 });
+
+Route::prefix('admin')->name('admin.')->group(function(){
+
+    //Get Categories datas
+    Route::get('/categories', 'App\Http\Controllers\CategoryController@index')->name('category.index');
+
+    //Show Category by Id
+    Route::get('/categories/show/{id}', 'App\Http\Controllers\CategoryController@show')->name('category.show');
+
+    //Get Categories by Id
+    Route::get('/categories/create', 'App\Http\Controllers\CategoryController@create')->name('category.create');
+
+    //Edit Category by Id
+    Route::get('/categories/edit/{id}', 'App\Http\Controllers\CategoryController@edit')->name('category.edit');
+
+    //Save new Category
+    Route::post('/categories/store', 'App\Http\Controllers\CategoryController@store')->name('category.store');
+
+    //Update One Category
+    Route::put('/categories/update/{category}', 'App\Http\Controllers\CategoryController@update')->name('category.update');
+
+    //Update One Category Speedly
+    Route::put('/categories/speed/{category}', 'App\Http\Controllers\CategoryController@updateSpeed')->name('category.update.speed');
+
+    //Delete Category
+    Route::delete('/categories/delete/{category}', 'App\Http\Controllers\CategoryController@delete')->name('category.delete');
+
+});
+
 
 // La route de secours (404)
 Route::fallback(function() {
     return "Ooops Cette page n'existe pas !";
 });
-
-
-
-
-
-
