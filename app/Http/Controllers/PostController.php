@@ -6,6 +6,7 @@ use App\Http\Requests\PostFormRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
@@ -17,7 +18,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy("created_at", "desc")->paginate(8);
+        $cachekey = 'posts_page_' . request('page', 1);
+
+        $posts = Cache::remember($cachekey, now()->addMinutes(10), function() {
+            return Post::orderBy("created_at", "desc")->paginate(8); // posts_page_1, posts_page_2 ...
+        });
+
         return view("posts.index", ["posts" => $posts]);
     }
 
@@ -84,8 +90,11 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $post = Post::findOrFail($id);
-
         $post->update($this->filterData($data, $post));
+
+        // On supprime la cache du post + liste
+        Cache::forget('post_' . $id);
+        Cache::flush();
 
         return redirect()->route('admin.post.index')->with("success", "Post has been updated !");
     }
@@ -97,8 +106,11 @@ class PostController extends Controller
         if(Storage::disk('public')->exists($post->imageUrl)) {
             Storage::disk('public')->delete($post->imageUrl);
         }
-
         $post->delete();
+
+        // On supprime la cache du post + liste
+        Cache::forget('post_' . $id);
+        Cache::flush();
 
         return response()->json([
             'isSuccess' => true,
