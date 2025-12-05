@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PostController;
 use App\Http\Middleware\Authenticate;
 use Faker\Guesser\Name;
@@ -17,6 +18,10 @@ use Illuminate\Http\Request;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Mail
+Route::get('/send-mail', [MailController::class, 'showForm'])->name('send.mail.form');
+Route::post('/send-mail', [MailController::class, 'sendMail'])->name('send.mail');
 
 Route::get('/', 'App\Http\Controllers\BlogController@index')->name('welcome');//->middleware('auth');
 Route::get('/register', 'App\Http\Controllers\BlogController@register')->name('register')->middleware('guest');
