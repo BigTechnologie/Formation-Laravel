@@ -11,6 +11,12 @@
 
         {!! $description !!}
        {{--  @dump($title) --}}
+
+        @if (session('success')) 
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
        
        <div class="posts row gx-0">
             @foreach ($posts as $post)

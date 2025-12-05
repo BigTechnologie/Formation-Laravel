@@ -21,9 +21,29 @@
                     </a>
                 </li>
             </ul>
-            <a href="{{ route('admin.post.index') }}" class="btn btn-success">
-                Admin
-            </a>
+
+            @auth
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    @method('DELETE') 
+
+                    <button class="btn btn-danger me-1">
+                        Logout
+                    </button>
+                </form>
+                @if(auth()->user()->roles && in_array('ROLE_ADMIN', json_decode(auth()->user()->roles)))
+                    <a href="{{ route('admin.post.index') }}" class="btn btn-success">
+                        Admin
+                    </a>
+                @endif
+            @else
+
+                    <a href="{{ route('login') }}" class="btn btn-warning me-1">
+                        Login
+                    </a>
+                    <a href="{{ route('register') }}" class="btn btn-success">Inscription</a>
+            @endauth
+
         </div>
     </div>
 </nav>

@@ -3,49 +3,64 @@
     @endsection
     <div class="row">
     <div class="col-md-8">
-        <form action="{{ isset($category) ? route('admin.category.update', ['category' => $category->id]) : route('admin.category.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ isset($user) ? route('admin.user.update', ['user' => $user->id]) : route('admin.user.store') }}" method="POST" >
         @csrf
-        @if(isset($category))
+        @if(isset($user))
             @method('PUT')
-        @endif    <div class="mb-3">
+        @endif 
+
+        <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input type="text"  placeholder="Name ..."  name="name" value="{{ old('name', isset($category) ? $category->name : '') }}" class="form-control" id="name" aria-describedby="nameHelp" required/>
+        <input type="text"  placeholder="Name ..."  name="name" value="{{ old('name', isset($user) ? $user->name : '') }}" class="form-control" id="name" aria-describedby="nameHelp" required/>
 
         @error('name')
             <div class="error text-danger">
                 {{ $message }}
             </div>
         @enderror
-    </div>    <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <input type="text"  placeholder="Description ..."  name="description" value="{{ old('description', isset($category) ? $category->description : '') }}" class="form-control" id="description" aria-describedby="descriptionHelp" required/>
+    </div> 
+    {{--  --}}
 
-        @error('description')
+    <div class="mb-3">
+        <label for="roles" class="form-label">Rôles</label>
+        <input type="text"  placeholder="Rôles ..."  name="roles" value="{{ old('roles', isset($user) ? $user->roles : '') }}" class="form-control" id="name" aria-describedby="nameHelp" required/>
+
+        @error('roles')
             <div class="error text-danger">
                 {{ $message }}
             </div>
         @enderror
-    </div>    <div class="mb-3">
-        <button type="button" class="btn btn-success btn-file my-1" onclick="triggerFileInput('imageUrl')">
-            Add file :  (ImageUrl)
-        </button>
-        <input type="file" name="imageUrl" value="{{ old('imageUrl', isset($category) ? $category->imageUrl : '') }}" class="visually-hidden form-control imageUpload" id="imageUrl" aria-describedby="imageUrlHelp"/>
+    </div>
 
-        <div class="form-group d-flex" id="preview_imageUrl" style="max-width: 100%;">
-        </div>
-        @error('imageUrl')
+    {{--  --}}
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text"  placeholder="Email ..."  name="email" value="{{ old('email', isset($user) ? $user->email : '') }}" class="form-control" id="email" aria-describedby="emailHelp" required/>
+
+        @error('email')
             <div class="error text-danger">
                 {{ $message }}
             </div>
         @enderror
-    </div>    
-    <a href="{{ route('admin.category.index') }}" class="btn btn-danger mt-1">
+    </div> 
+    
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" name="password" placeholder="Password ..." value="{{ old('password', isset($user) ? $user->password : '') }}" class="form-control" id="password" aria-describedby="passwordHelp" required/>
+
+        @error('password')
+            <div class="error text-danger">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>    <a href="{{ route('admin.user.index') }}" class="btn btn-danger mt-1">
         Cancel
     </a>
-    <button class="btn btn-primary mt-1"> {{ isset($category) ? 'Update' : 'Create' }}</button>
+    <button class="btn btn-primary mt-1"> {{ isset($user) ? 'Update' : 'Create' }}</button>
  </form>
     </div>
-   
+  
     </div>
 
     @section('scripts')
