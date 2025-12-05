@@ -7,13 +7,17 @@
 @section('container')
 
     <div class="container">
-        <h1>Register Form</h1>
+        {{-- <h1>Register Form</h1> --}}
+        {{-- <h1> {{ __('register.contact_name') }} </h1> --}}
+        
+        <h1>{{ __('Register Form') }}</h1>
+
         <form action="{{ route('register.save') }}" method="POST">
             @csrf
             @if(isset($user))
                 @method('PUT')
             @endif <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
+                <label for="name" class="form-label">{{ __('Name') }}</label>
                 <input type="text" placeholder="Name ..." name="name"
                     value="{{ old('name', isset($user) ? $user->name : '') }}" class="form-control" id="name"
                     aria-describedby="nameHelp" required />
